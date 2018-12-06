@@ -1,0 +1,19 @@
+file_path = File.expand_path("../input.txt", __FILE__)
+input     = File.read(file_path)
+
+claims = input.split("\n")
+
+grid = Array.new(1000) { Array.new(1000, 0) }
+
+claims.each do |claim|
+  x,y = claim.split('@')[1].split(':')[0].split(',').map(&:to_i)
+  width, height = claim.split('@')[1].split(':')[1].split('x').map(&:to_i)
+
+  width.times do |col|
+    height.times do |row|
+      grid[x+col][y+row] += 1
+    end
+  end
+end
+
+puts grid.flatten.select { |pos| pos > 1}.count
